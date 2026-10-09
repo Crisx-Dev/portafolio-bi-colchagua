@@ -1,0 +1,87 @@
+---
+// src/components/TechStack.astro
+// Sección "Tecnologías" con el stack técnico presentado en grupos.
+// Vive debajo del Hero, con su propio id para el índice.
+import { profileData } from '../data/profileData';
+import * as icons from 'simple-icons';
+
+const { stack } = profileData;
+
+const getIcon = (name: string) => {
+  const key = `si${name}`;
+  return (icons as any)[key] || null;
+};
+---
+
+<section id="tecnologias" class="relative py-24 lg:py-32
+                                bg-white dark:bg-slate-900
+                                transition-colors duration-500">
+
+  <!-- Divisor decorativo superior -->
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <!-- Encabezado de sección -->
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        02 — Stack técnico
+      </p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.1]">
+        Tecnologías con las que trabajo
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+        Herramientas y lenguajes que utilizo para construir soluciones de datos de punta a punta: desde la ingesta y transformación hasta la visualización y el despliegue.
+      </p>
+    </div>
+
+    <!-- Grid de grupos de tecnologías -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      {stack.map((group) => (
+        <div class="group">
+          <!-- Título de la categoría -->
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-6 h-px bg-emerald-500"></span>
+            <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold">
+              {group.category}
+            </h3>
+          </div>
+
+          <!-- Lista de tecnologías -->
+          <div class="flex flex-wrap gap-2">
+            {group.items.map((item: string) => {
+              const icon = getIcon(item);
+              return (
+                <span
+                  class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg
+                         bg-slate-50 dark:bg-slate-800/60
+                         border border-slate-200 dark:border-slate-700/60
+                         text-sm font-medium text-slate-700 dark:text-slate-200
+                         hover:border-emerald-400 dark:hover:border-emerald-600
+                         hover:bg-white dark:hover:bg-slate-800
+                         hover:shadow-md hover:-translate-y-0.5
+                         transition-all cursor-default"
+                  title={icon?.title || item}
+                >
+                  {icon ? (
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0" fill={`#${icon.hex}`} aria-hidden="true">
+                      <path d={icon.path} />
+                    </svg>
+                  ) : (
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                  )}
+                  {icon?.title || item}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
