@@ -1,16 +1,29 @@
 ---
+// src/pages/index.astro
+import Sidebar from '../components/Sidebar.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Hero from '../components/Hero.astro';
+import TechStack from '../components/TechStack.astro';
+import Projects from '../components/Projects.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Cristóbal Vargas | Portafolio BI</title>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+
+    <Sidebar />
+    <ThemeToggle />
+
+    <main>
+      <Hero />
+      <TechStack />
+      <Projects />
+      <!-- Próximas secciones: Contexto, Metodología, Hallazgos, etc. -->
+    </main>
+
+  </body>
 </html>
