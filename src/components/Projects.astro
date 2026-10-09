@@ -1,0 +1,340 @@
+---
+// src/components/Projects.astro
+// Sección de proyectos con modal de preview.
+// Layout de la modal: info a la izquierda, imágenes a la derecha.
+import { projectsData } from '../data/projectsData';
+---
+
+<section id="proyectos" class="relative py-24 lg:py-32
+                                bg-slate-50 dark:bg-slate-950
+                                transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <!-- Encabezado -->
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        03 — Proyectos
+      </p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.1]">
+        Trabajos destacados
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+        Proyectos de Business Intelligence y análisis de datos donde aplico el pipeline completo.
+      </p>
+    </div>
+
+    <!-- Tarjetas de proyectos -->
+    <div class="grid grid-cols-1 gap-6">
+      {projectsData.map((project) => (
+        <button
+          type="button"
+          data-project-modal={project.id}
+          class="group relative text-left w-full rounded-2xl
+                 bg-white dark:bg-slate-900
+                 border border-slate-200 dark:border-slate-800
+                 hover:border-emerald-400 dark:hover:border-emerald-600
+                 shadow-sm hover:shadow-xl
+                 transition-all duration-300
+                 overflow-hidden
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+        >
+          <div class="absolute top-0 left-0 h-1 w-0
+                      bg-gradient-to-r from-emerald-500 to-emerald-300
+                      group-hover:w-full transition-all duration-500"></div>
+
+          <div class="p-8 md:p-10">
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+              <span class="inline-flex items-center gap-2
+                           text-[10px] uppercase tracking-[0.2em] font-semibold
+                           text-emerald-700 dark:text-emerald-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                {project.category}
+              </span>
+              <span class="text-slate-300 dark:text-slate-700">·</span>
+              <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-medium">
+                {project.year}
+              </span>
+              {project.period && (
+                <>
+                  <span class="text-slate-300 dark:text-slate-700">·</span>
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md
+                               bg-emerald-50 dark:bg-emerald-950/40
+                               border border-emerald-200 dark:border-emerald-800
+                               text-[10px] uppercase tracking-[0.15em] font-semibold
+                               text-emerald-700 dark:text-emerald-400">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    {project.period}
+                  </span>
+                </>
+              )}
+            </div>
+
+            <div class="flex items-start justify-between gap-6 mb-4">
+              <h3 class="text-2xl md:text-3xl font-bold tracking-tight
+                         text-slate-900 dark:text-white leading-tight
+                         group-hover:text-emerald-700 dark:group-hover:text-emerald-400
+                         transition-colors">
+                {project.title}
+              </h3>
+              <div class="shrink-0 mt-1 w-10 h-10 rounded-full
+                          bg-slate-100 dark:bg-slate-800
+                          flex items-center justify-center
+                          group-hover:bg-emerald-500
+                          transition-all">
+                <svg class="w-5 h-5 text-slate-600 dark:text-slate-300 group-hover:text-white"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </div>
+            </div>
+
+            <p class="text-base text-slate-600 dark:text-slate-400
+                      max-w-3xl mb-6 leading-relaxed">
+              {project.shortDescription}
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span class="inline-flex items-center px-3 py-1 rounded-md
+                             bg-slate-100 dark:bg-slate-800
+                             text-xs font-medium
+                             text-slate-700 dark:text-slate-300
+                             border border-slate-200 dark:border-slate-700">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Modales de preview -->
+{projectsData.map((project) => (
+  <dialog
+    id={`modal-${project.id}`}
+    data-project-dialog={project.id}
+    class="project-modal backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm
+           w-[95vw] max-w-5xl max-h-[90vh]
+           rounded-2xl p-0
+           bg-white dark:bg-slate-900
+           border border-slate-200 dark:border-slate-800
+           shadow-2xl
+           overflow-hidden"
+  >
+    <div class="relative grid grid-cols-1 lg:grid-cols-12 max-h-[90vh]">
+
+      <!-- Columna izquierda: información -->
+      <div class="lg:col-span-7 p-8 lg:p-10 overflow-y-auto">
+
+        <div class="flex flex-wrap items-center gap-3 mb-5">
+          <span class="inline-flex items-center gap-2
+                       text-[10px] uppercase tracking-[0.2em] font-semibold
+                       text-emerald-700 dark:text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            {project.category}
+          </span>
+          <span class="text-slate-300 dark:text-slate-700">·</span>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-medium">
+            {project.year}
+          </span>
+          {project.period && (
+            <>
+              <span class="text-slate-300 dark:text-slate-700">·</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md
+                           bg-emerald-50 dark:bg-emerald-950/40
+                           border border-emerald-200 dark:border-emerald-800
+                           text-[10px] uppercase tracking-[0.15em] font-semibold
+                           text-emerald-700 dark:text-emerald-400">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                {project.period}
+              </span>
+            </>
+          )}
+        </div>
+
+        <h3 class="text-2xl lg:text-3xl font-bold tracking-tight
+                   text-slate-900 dark:text-white mb-5 leading-tight">
+          {project.title}
+        </h3>
+
+        <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+          {project.preview.description}
+        </p>
+
+        <div class="flex flex-wrap gap-2 mb-8">
+          {project.tags.map((tag) => (
+            <span class="inline-flex items-center px-3 py-1 rounded-md
+                         bg-slate-100 dark:bg-slate-800
+                         text-xs font-medium
+                         text-slate-700 dark:text-slate-300
+                         border border-slate-200 dark:border-slate-700">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <a
+          href={project.link}
+          class="inline-flex items-center gap-2 px-6 py-3
+                 bg-slate-900 dark:bg-white
+                 text-white dark:text-slate-900
+                 rounded-lg font-semibold text-sm
+                 hover:bg-emerald-700 dark:hover:bg-emerald-400
+                 transition-all shadow-lg group/cta"
+        >
+          {project.linkLabel}
+          <svg class="w-4 h-4 transition-transform group-hover/cta:translate-x-1"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+
+      </div>
+
+      <!-- Columna derecha: imágenes -->
+      <div class="lg:col-span-5 p-6 lg:p-8
+                  bg-slate-50 dark:bg-slate-950/50
+                  border-l border-slate-200 dark:border-slate-800
+                  overflow-y-auto">
+        <div class="flex flex-col gap-5">
+
+          <figure>
+            <div class="relative aspect-video rounded-lg overflow-hidden
+                        border border-slate-200 dark:border-slate-700
+                        shadow-md">
+              <img
+                src={project.preview.images.biDashboard.src}
+                alt={project.preview.images.biDashboard.alt}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="mt-2 text-xs text-slate-500 dark:text-slate-400 italic">
+              {project.preview.images.biDashboard.caption}
+            </figcaption>
+          </figure>
+
+          <figure>
+            <div class="relative aspect-video rounded-lg overflow-hidden
+                        border border-slate-200 dark:border-slate-700
+                        shadow-md">
+              <img
+                src={project.preview.images.heroPreview.src}
+                alt={project.preview.images.heroPreview.alt}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="mt-2 text-xs text-slate-500 dark:text-slate-400 italic">
+              {project.preview.images.heroPreview.caption}
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <!-- Botón de cerrar -->
+      <button
+        type="button"
+        data-modal-close
+        aria-label="Cerrar"
+        class="absolute top-4 right-4 z-10
+               w-9 h-9 rounded-full
+               bg-white/90 dark:bg-slate-800/90 backdrop-blur-md
+               border border-slate-200 dark:border-slate-700
+               flex items-center justify-center
+               text-slate-600 dark:text-slate-300
+               hover:bg-slate-100 dark:hover:bg-slate-700
+               hover:text-slate-900 dark:hover:text-white
+               transition-all shadow-md"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+    </div>
+  </dialog>
+))}
+
+<style>
+  dialog.project-modal {
+    margin: auto;
+    padding: 0;
+    border: none;
+  }
+
+  dialog.project-modal::backdrop {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  dialog.project-modal[open] {
+    animation: modalIn 0.25s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const cards = document.querySelectorAll<HTMLButtonElement>('[data-project-modal]');
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.projectModal;
+        if (!id) return;
+        const dialog = document.getElementById(`modal-${id}`) as HTMLDialogElement | null;
+        dialog?.showModal();
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-modal-close]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dialog = btn.closest('dialog') as HTMLDialogElement | null;
+        dialog?.close();
+      });
+    });
+
+    document.querySelectorAll<HTMLDialogElement>('.project-modal').forEach((dialog) => {
+      dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog =
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom;
+        if (!isInDialog) dialog.close();
+      });
+    });
+  })();
+</script>
