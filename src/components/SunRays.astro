@@ -1,0 +1,61 @@
+---
+// src/components/SunRays.astro
+// Rayos volumétricos alineados exactamente con el sol.
+// Anclados al mismo top-[12%] left-1/2 que el astro.
+// Intensidad reducida para no opacar el sol.
+---
+
+<div class="pointer-events-none absolute inset-0 overflow-hidden z-0 transition-opacity duration-1000 opacity-40 dark:!opacity-0">
+
+  <!-- Contenedor raíz: ancla los rayos al mismo punto que el sol -->
+  <div class="absolute top-[12%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+
+    <!-- Rayos cónicos que rotan sobre su propio eje -->
+    <div class="w-[800px] h-[800px] animate-rays-rotate"
+         style="background: conic-gradient(from 0deg,
+           transparent 0deg,
+           rgba(252, 211, 77, 0.12) 8deg,
+           transparent 16deg,
+           transparent 36deg,
+           rgba(252, 211, 77, 0.10) 44deg,
+           transparent 52deg,
+           transparent 72deg,
+           rgba(252, 211, 77, 0.14) 80deg,
+           transparent 88deg,
+           transparent 108deg,
+           rgba(252, 211, 77, 0.12) 116deg,
+           transparent 124deg,
+           transparent 144deg,
+           rgba(252, 211, 77, 0.10) 152deg,
+           transparent 160deg,
+           transparent 180deg,
+           rgba(252, 211, 77, 0.13) 188deg,
+           transparent 196deg,
+           transparent 216deg,
+           rgba(252, 211, 77, 0.11) 224deg,
+           transparent 232deg,
+           transparent 252deg,
+           rgba(252, 211, 77, 0.14) 260deg,
+           transparent 268deg,
+           transparent 288deg,
+           rgba(252, 211, 77, 0.12) 296deg,
+           transparent 304deg,
+           transparent 324deg,
+           rgba(252, 211, 77, 0.10) 332deg,
+           transparent 340deg,
+           transparent 360deg);
+           mask-image: radial-gradient(circle at center,
+             transparent 0%,
+             black 15%,
+             black 45%,
+             transparent 70%);
+           -webkit-mask-image: radial-gradient(circle at center,
+             transparent 0%,
+             black 15%,
+             black 45%,
+             transparent 70%);">
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+---
+// src/components/CelestialBody.astro
+// Astro (sol/luna) clickeable que alterna día/noche con crossfade.
+// El botón completo escala al hover para dar feedback visual uniforme.
+---
+
+<div class="pointer-events-none absolute inset-0 overflow-hidden z-0">
+
+  <button
+    id="celestial-toggle"
+    aria-label="Alternar modo día/noche"
+    class="pointer-events-auto absolute left-1/2 -translate-x-1/2 top-[12%] group focus:outline-none transition-transform duration-300 hover:scale-110"
+  >
+
+    <!-- SOL (visible en día) -->
+    <div class="relative transition-opacity duration-1000 ease-in-out opacity-100 dark:opacity-0">
+      <div class="absolute inset-0 w-32 h-32 md:w-40 md:h-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sol/30 blur-2xl animate-pulse-slow"></div>
+      <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-yellow-200 via-sol to-amber-500 shadow-2xl shadow-yellow-500/50 animate-spin-slow">
+        <div class="absolute inset-1.5 rounded-full bg-gradient-to-tr from-transparent via-white/20 to-transparent"></div>
+      </div>
+    </div>
+
+    <!-- LUNA (visible en noche) -->
+    <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0 dark:opacity-100">
+      <div class="absolute inset-0 w-32 h-32 md:w-40 md:h-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-luna/20 blur-3xl animate-pulse-slow"></div>
+      <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-slate-100 via-luna to-slate-400 shadow-2xl shadow-slate-300/30">
+        <div class="absolute top-3 left-4 w-2 h-2 rounded-full bg-slate-400/40"></div>
+        <div class="absolute top-7 right-3 w-1.5 h-1.5 rounded-full bg-slate-400/40"></div>
+        <div class="absolute bottom-3 left-3 w-2.5 h-2.5 rounded-full bg-slate-400/30"></div>
+      </div>
+    </div>
+
+  </button>
+
+</div>
