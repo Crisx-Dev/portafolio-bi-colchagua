@@ -1,0 +1,48 @@
+---
+// src/components/MagneticButton.astro
+// Botón con efecto magnético: se atrae hacia el cursor cuando está cerca.
+// Uso: <MagneticButton strength={0.4} radius={90}><a href="...">Texto</a></MagneticButton>
+
+const { strength = 0.4, radius = 90 } = Astro.props;
+---
+
+<div
+  class="magnetic-wrap inline-block"
+  data-strength={strength}
+  data-radius={radius}
+>
+  <slot />
+</div>
+
+<script>
+  (() => {
+    const wraps = document.querySelectorAll<HTMLElement>('.magnetic-wrap');
+
+    wraps.forEach((wrap) => {
+      const strength = parseFloat(wrap.dataset.strength || '0.4');
+      const radius = parseFloat(wrap.dataset.radius || '90');
+      const child = wrap.firstElementChild as HTMLElement | null;
+      if (!child) return;
+
+      document.addEventListener('mousemove', (e) => {
+        const rect = child.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const distX = e.clientX - centerX;
+        const distY = e.clientY - centerY;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+
+        if (distance < radius) {
+          const pullX = distX * strength;
+          const pullY = distY * strength;
+          child.style.transform = `translate(${pullX}px, ${pullY}px)`;
+          child.style.transition = 'transform 0.2s ease-out';
+        } else {
+          child.style.transform = 'translate(0, 0)';
+          child.style.transition = 'transform 0.4s ease-out';
+        }
+      });
+    });
+  })();
+</script>

@@ -1,1 +1,30 @@
-@import "tailwindcss";
+/* src/styles/global.css */
+
+/* Selección de texto personalizada */
+::selection {
+  background-color: #065f46;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: #065f46;
+  color: #ffffff;
+}
+
+/* Scroll suave al hacer clic en los links del índice */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Compensación por si en el futuro agregas una barra fija arriba */
+/* (no afecta ahora, pero deja listo el offset si lo necesitas) */
+section[id] {
+  scroll-margin-top: 0;
+}
+
+/* Respetar la preferencia de accesibilidad de usuarios */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

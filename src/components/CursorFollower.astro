@@ -1,0 +1,61 @@
+---
+// src/components/CursorFollower.astro
+// Luz radial suave que sigue al mouse. NO oculta el cursor nativo.
+// Cambia de color según el tema: ámbar en día, cian en noche.
+---
+
+<div
+  id="cursor-glow"
+  class="pointer-events-none fixed top-0 left-0 z-0 hidden md:block"
+  aria-hidden="true"
+>
+  <div
+    id="cursor-glow-inner"
+    class="absolute -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full
+           transition-colors duration-700 ease-in-out
+           bg-[radial-gradient(circle,rgba(251,191,36,0.18)_0%,rgba(251,191,36,0.08)_35%,transparent_70%)]
+           dark:bg-[radial-gradient(circle,rgba(56,189,248,0.15)_0%,rgba(56,189,248,0.06)_35%,transparent_70%)]"
+  ></div>
+</div>
+
+<style>
+  @media (hover: none), (prefers-reduced-motion: reduce) {
+    #cursor-glow {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const glow = document.getElementById('cursor-glow');
+    if (!glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+    const EASING = 0.08;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      glow.style.opacity = '1';
+    });
+
+    const animate = () => {
+      currentX += (mouseX - currentX) * EASING;
+      currentY += (mouseY - currentY) * EASING;
+      glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      requestAnimationFrame(animate);
+    };
+    animate();
+  })();
+</script>
