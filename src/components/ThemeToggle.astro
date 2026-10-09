@@ -1,0 +1,47 @@
+---
+// src/components/ThemeToggle.astro
+// Botón flotante de cambio de tema. Esquina superior derecha.
+---
+
+<button
+  id="theme-toggle"
+  aria-label="Alternar modo día/noche"
+  class="fixed top-4 right-4 md:top-6 md:right-6 z-50
+         p-2.5 rounded-full
+         bg-white/80 dark:bg-slate-800/80
+         backdrop-blur-md
+         border border-slate-200 dark:border-slate-700
+         shadow-lg hover:shadow-xl
+         hover:scale-110
+         transition-all duration-300
+         focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+>
+  <!-- Luna (visible en modo claro) -->
+  <svg class="w-5 h-5 text-slate-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+  </svg>
+
+  <!-- Sol (visible en modo oscuro) -->
+  <svg class="w-5 h-5 text-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 3.22a1 1 0 011.415 0l.708.708a1 1 0 01-1.414 1.414l-.708-.708a1 1 0 010-1.414zM16 10a1 1 0 011 1h1a1 1 0 110-2h-1a1 1 0 01-1 1zm-3.22 4.22a1 1 0 010 1.415l-.708.708a1 1 0 01-1.414-1.414l.708-.708a1 1 0 011.414 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-3.22a1 1 0 01-1.415 0l-.708-.708a1 1 0 011.414-1.414l.708.708a1 1 0 010 1.414zM4 10a1 1 0 01-1-1H2a1 1 0 110 2h1a1 1 0 011-1zm3.22-4.22a1 1 0 010-1.415l.708-.708a1 1 0 011.414 1.414l-.708.708a1 1 0 01-1.414 0zM10 5a5 5 0 100 10 5 5 0 000-10z" clip-rule="evenodd"></path>
+  </svg>
+</button>
+
+<script>
+  // =====================================================
+  // GESTIÓN DE TEMA
+  // =====================================================
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    document.documentElement.classList.add('dark');
+  }
+
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  };
+
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('celestial-toggle')?.addEventListener('click', toggleTheme);
+</script>
