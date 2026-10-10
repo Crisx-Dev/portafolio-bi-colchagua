@@ -1,0 +1,247 @@
+---
+// src/components/Methodology.astro
+// Sección Metodología: pipeline, datamart, ML y dashboard.
+import { methodologyData, type ForecastComparisonRow } from '../data/methodologyData';
+
+const { pipeline, datamart, ml, forecastComparison, dashboard } = methodologyData;
+const comparison = forecastComparison as ForecastComparisonRow[];
+---
+
+<section id="metodologia" class="reveal relative py-24 lg:py-32
+                                  bg-slate-50 dark:bg-slate-950
+                                  transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <!-- Encabezado -->
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        Metodología
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.15]">
+        Del dato crudo a la decisión ejecutiva
+      </h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+        Un pipeline de cinco etapas que transforma fuentes gubernamentales dispersas en un datamart listo para análisis, machine learning y visualización interactiva.
+      </p>
+    </div>
+
+    <!-- BLOQUE 1: Pipeline -->
+    <div class="mb-20">
+      <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-8">
+        Pipeline del proyecto
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        {pipeline.map((step) => (
+          <div class="relative p-6 rounded-2xl
+                      bg-white dark:bg-slate-900
+                      border border-slate-200 dark:border-slate-800
+                      hover:border-emerald-400 dark:hover:border-emerald-600
+                      hover:shadow-lg
+                      transition-all">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-3">
+              {step.step}
+            </p>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white mb-2 leading-tight">
+              {step.title}
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: Datamart -->
+    <div class="mb-20">
+      <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-8">
+        Datamart en esquema estrella
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <div class="p-6 lg:p-8 rounded-2xl
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-4">
+            6 dimensiones
+          </p>
+          <ul class="space-y-3">
+            {datamart.dimensions.map((dim) => (
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <div>
+                  <p class="text-sm font-mono font-medium text-slate-900 dark:text-white">
+                    {dim.name}
+                  </p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    {dim.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="p-6 lg:p-8 rounded-2xl
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-4">
+            5 tablas de hechos
+          </p>
+          <ul class="space-y-3">
+            {datamart.facts.map((fact) => (
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                <p class="text-sm font-mono font-medium text-slate-900 dark:text-white">
+                  {fact}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: Machine Learning -->
+    <div class="mb-20">
+      <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-8">
+        Machine Learning aplicado
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {ml.map((item, i) => (
+          <div class={`reveal reveal-delay-${i + 1} p-6 rounded-2xl
+                      bg-white dark:bg-slate-900
+                      border border-slate-200 dark:border-slate-800
+                      hover:border-emerald-400 dark:hover:border-emerald-600
+                      hover:shadow-lg
+                      transition-all`}>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold mb-3">
+              {item.type}
+            </p>
+            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+              {item.algorithm}
+            </h4>
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-mono mb-4">
+              {item.metric}
+            </p>
+            <div class="inline-flex items-center px-3 py-1 rounded-md mb-4
+                        bg-emerald-50 dark:bg-emerald-950/40
+                        border border-emerald-200 dark:border-emerald-800">
+              <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                {item.result}
+              </span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- BLOQUE 3.5: Comparación de modelos -->
+    <div class="mb-20 p-6 lg:p-8 rounded-2xl
+                bg-white dark:bg-slate-900
+                border border-slate-200 dark:border-slate-800">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-6">
+        Comparación de modelos de forecast hídrico
+      </p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate-200 dark:border-slate-800">
+              <th class="text-left py-3 text-slate-500 dark:text-slate-400 font-semibold text-xs uppercase tracking-wider">Modelo</th>
+              <th class="text-right py-3 text-slate-500 dark:text-slate-400 font-semibold text-xs uppercase tracking-wider">RMSE</th>
+              <th class="text-right py-3 text-slate-500 dark:text-slate-400 font-semibold text-xs uppercase tracking-wider">MAE</th>
+              <th class="text-right py-3 text-slate-500 dark:text-slate-400 font-semibold text-xs uppercase tracking-wider">sMAPE</th>
+              <th class="text-right py-3 text-slate-500 dark:text-slate-400 font-semibold text-xs uppercase tracking-wider">vs Naive</th>
+            </tr>
+          </thead>
+          <tbody class="text-slate-700 dark:text-slate-300">
+            {comparison.map((row) => (
+              <tr class={`border-b border-slate-100 dark:border-slate-800/50 ${row.isBest ? 'last:border-0' : ''}`}>
+                <td class={`py-3 font-mono ${row.isBest ? 'font-bold text-emerald-600 dark:text-emerald-400' : ''}`}>
+                  {row.model}
+                </td>
+                <td class={`text-right py-3 font-mono ${row.isBest ? 'font-bold' : ''}`}>
+                  {row.rmse}
+                </td>
+                <td class={`text-right py-3 font-mono ${row.isBest ? 'font-bold' : ''}`}>
+                  {row.mae}
+                </td>
+                <td class={`text-right py-3 font-mono ${row.isBest ? 'font-bold' : ''}`}>
+                  {row.smape}
+                </td>
+                <td class={`text-right py-3 font-mono ${row.isBest ? 'font-bold text-emerald-500' : 'text-red-500'}`}>
+                  {row.vsNaive}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-4 text-xs text-slate-500 dark:text-slate-400 italic">
+        Holt-Winters fue seleccionado por su mejor desempeño relativo frente al modelo Naive, aunque su sMAPE refleja la complejidad inherente de predecir escasez hídrica en una zona semiárida.
+      </p>
+    </div>
+
+    <!-- BLOQUE 4: Dashboard y DAX -->
+    <div>
+      <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-8">
+        Dashboard y medidas DAX
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <div class="p-6 lg:p-8 rounded-2xl
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-4">
+            Medidas avanzadas
+          </p>
+          <ul class="space-y-3">
+            {dashboard.measures.map((m) => (
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <p class="text-sm font-mono text-slate-700 dark:text-slate-300">
+                  {m}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="p-6 lg:p-8 rounded-2xl
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-4">
+            Capacidades del dashboard
+          </p>
+          <ul class="space-y-3">
+            {dashboard.features.map((f) => (
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                <p class="text-sm text-slate-700 dark:text-slate-300">
+                  {f}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

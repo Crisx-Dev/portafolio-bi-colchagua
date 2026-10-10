@@ -1,12 +1,11 @@
 ---
 // src/pages/proyectos/colchagua.astro
-// Página dedicada al caso de estudio Colchagua.
-// Ruta: /proyectos/colchagua
 import '../../styles/global.css';
 import Sidebar from '../../components/Sidebar.astro';
 import ThemeToggle from '../../components/ThemeToggle.astro';
 import ColchaguaHero from '../../components/ColchaguaHero.astro';
 import ColchaguaContext from '../../components/ColchaguaContext.astro';
+import Methodology from '../../components/Methodology.astro';
 import ScrollReveal from '../../components/ScrollReveal.astro';
 import { colchaguaLinks } from '../../data/navigation';
 ---
@@ -27,7 +26,8 @@ import { colchaguaLinks } from '../../data/navigation';
         <ColchaguaHero />
         <ColchaguaContext />
       </div>
-      <!-- Próximamente: Metodología, Hallazgos, Conclusiones, Dashboard, Notebooks -->
+      <Methodology />
+      <!-- Próximamente: Hallazgos, Conclusiones, Dashboard, Notebooks -->
     </main>
 
     <ScrollReveal />
