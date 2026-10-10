@@ -1,0 +1,198 @@
+---
+// src/components/ColchaguaContext.astro
+// Bloques 2, 3 y 4 de la sección Contexto Colchagua.
+// Cada bloque tiene la clase "reveal" para animarse al entrar al viewport.
+import { colchaguaContext } from '../data/colchaguaData';
+
+const { planteamiento, hypotheses, sources } = colchaguaContext;
+---
+
+<!-- ============================================================
+     BLOQUE 2: Planteamiento del problema
+     ============================================================ -->
+<section class="reveal relative py-24 lg:py-32
+                bg-white dark:bg-slate-900
+                transition-colors duration-500">
+  <div class="max-w-5xl mx-auto px-6 lg:px-12">
+
+    <div class="max-w-3xl mb-12">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        El problema
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-8 leading-[1.15]">
+        Una economía provincial expuesta en cadena
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+      <div>
+        <p class="text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
+          {planteamiento.context}
+        </p>
+      </div>
+      <div class="relative p-6 rounded-xl
+                  bg-slate-50 dark:bg-slate-800/50
+                  border-l-4 border-emerald-500">
+        <p class="text-base text-slate-700 dark:text-slate-300 leading-relaxed italic">
+          {planteamiento.problem}
+        </p>
+      </div>
+    </div>
+
+    <div class="relative rounded-2xl p-8 lg:p-12 mb-16
+                bg-gradient-to-br from-emerald-50 to-sky-50
+                dark:from-emerald-950/30 dark:to-sky-950/30
+                border border-emerald-200 dark:border-emerald-800">
+      <div class="flex items-start gap-4">
+        <span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 font-semibold mb-4">
+            Pregunta central
+          </p>
+          <p class="text-xl md:text-2xl font-medium text-slate-900 dark:text-white leading-relaxed italic">
+            "{planteamiento.centralQuestion}"
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl">
+      <h3 class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-4">
+        Enfoque metodológico
+      </h3>
+      <p class="text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+        {planteamiento.approach}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOQUE 3: Hipótesis de trabajo
+     ============================================================ -->
+<section class="reveal relative py-24 lg:py-32
+                bg-slate-50 dark:bg-slate-950
+                transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        Hipótesis de trabajo
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.15]">
+        Tres hipótesis puestas a prueba con datos
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {hypotheses.map((h, i) => (
+        <div class={`reveal reveal-delay-${i + 1} relative p-8 rounded-2xl
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800
+                    hover:border-emerald-400 dark:hover:border-emerald-600
+                    hover:shadow-xl
+                    transition-all`}>
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg
+                      bg-emerald-100 dark:bg-emerald-950/50
+                      text-emerald-700 dark:text-emerald-400
+                      font-bold text-sm mb-6">
+            {h.id}
+          </div>
+
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 leading-tight">
+            {h.title}
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            {h.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOQUE 4: Fuentes de datos
+     ============================================================ -->
+<section class="reveal relative py-24 lg:py-32
+                bg-white dark:bg-slate-900
+                transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        Fuentes de datos
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.15]">
+        Cuatro fuentes oficiales integradas
+      </h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+        Para garantizar la validez del análisis, se utilizaron exclusivamente fuentes oficiales y públicas, asegurando la trazabilidad de la evidencia.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {sources.map((source) => (
+        <a
+          href={source.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative p-8 rounded-2xl
+                 bg-slate-50 dark:bg-slate-950/50
+                 border border-slate-200 dark:border-slate-800
+                 hover:border-emerald-400 dark:hover:border-emerald-600
+                 hover:bg-white dark:hover:bg-slate-900
+                 hover:shadow-xl
+                 transition-all"
+        >
+          <div class="absolute top-6 right-6 w-8 h-8 rounded-full
+                      bg-slate-200 dark:bg-slate-800
+                      flex items-center justify-center
+                      group-hover:bg-emerald-500
+                      transition-all">
+            <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 group-hover:text-white"
+                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </div>
+
+          <div class="mb-6 pr-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">
+              {source.name}
+            </h3>
+            <p class="text-xs uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 font-medium">
+              {source.fullName}
+            </p>
+          </div>
+
+          <p class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            {source.dataset}
+          </p>
+
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">
+            Período: {source.period}
+          </p>
+
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-200 dark:border-slate-800 pt-4">
+            {source.justification}
+          </p>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

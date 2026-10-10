@@ -1,0 +1,75 @@
+---
+// src/components/ColchaguaHero.astro
+// Hero del caso Colchagua con imagen del trigo, sol/luna y efectos ambientales.
+import { colchaguaContext } from '../data/colchaguaData';
+import CelestialBody from './CelestialBody.astro';
+import SunRays from './SunRays.astro';
+import WindEffect from './WindEffect.astro';
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950">
+
+  <!-- ASTROS: sol (día) / luna (noche) -->
+  <CelestialBody />
+
+  <!-- Imagen con encuadre ajustado -->
+  <img
+    src="/trigo.webp"
+    alt="Campo de trigo en Colchagua"
+    class="absolute inset-0 w-full h-full object-cover object-[center_15%] saturate-125"
+  />
+
+  <!-- CAPA 1: Gradiente vertical día/noche -->
+  <div class="absolute inset-0 bg-gradient-to-b
+              from-sky-500/35 via-slate-900/45 to-slate-950/85
+              dark:from-slate-950/85 dark:via-slate-950/70 dark:to-slate-950/95"></div>
+
+  <!-- CAPA 2: Viñeta radial (oscurece bordes para dar profundidad) -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(2,6,23,0.55)_100%)]"></div>
+
+  <!-- Efectos ambientales -->
+  <SunRays />
+  <WindEffect />
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 py-24 text-center">
+
+    <!-- Chip de categoría -->
+    <div class="inline-flex items-center gap-3 mb-8 px-4 py-2 rounded-full
+                bg-white/10 backdrop-blur-md border border-white/20">
+      <span class="inline-flex items-center gap-2
+                   text-[10px] uppercase tracking-[0.2em] font-semibold text-emerald-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        {colchaguaContext.category}
+      </span>
+      <span class="text-white/40">·</span>
+      <span class="text-[10px] uppercase tracking-[0.2em] font-semibold text-white/70">
+        {colchaguaContext.period}
+      </span>
+    </div>
+
+    <!-- Subtítulo -->
+    <p class="text-sm uppercase tracking-[0.3em] text-white/70 mb-4 font-medium">
+      {colchaguaContext.subtitle}
+    </p>
+
+    <!-- Título principal -->
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight
+               text-white mb-6 leading-[1.1] max-w-4xl mx-auto drop-shadow-lg">
+      {colchaguaContext.title}
+    </h1>
+
+    <!-- Ubicación -->
+    <p class="text-base md:text-lg text-white/80 max-w-2xl mx-auto drop-shadow-md">
+      {colchaguaContext.location}
+    </p>
+
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60">
+    <span class="text-[10px] uppercase tracking-[0.3em] font-medium">Scroll</span>
+    <div class="w-px h-12 bg-gradient-to-b from-white/60 to-transparent"></div>
+  </div>
+
+</section>
