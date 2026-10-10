@@ -48,7 +48,7 @@ export const projectsData: Project[] = [
           caption: "Dashboard interactivo en Power BI",
         },
         heroPreview: {
-          src: "/images/proyectos/colchagua-hero-preview.png",
+          src: "/images/proyectos/colchagua-hero-preview.webp",
           alt: "Vista previa del Hero de la página del caso de estudio",
           caption: "Portada del caso de estudio",
         },
