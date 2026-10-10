@@ -26,7 +26,10 @@ import WindEffect from './WindEffect.astro';
 
   <!-- CAPA 2: Viñeta radial (oscurece bordes para dar profundidad) -->
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(2,6,23,0.55)_100%)]"></div>
-
+      <!-- CAPA 3: Transición inferior hacia la siguiente sección -->
+  <div class="absolute bottom-0 left-0 w-full h-32
+              bg-gradient-to-b from-transparent to-white
+              dark:to-slate-900"></div>
   <!-- Efectos ambientales -->
   <SunRays />
   <WindEffect />
