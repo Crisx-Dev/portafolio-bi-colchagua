@@ -8,6 +8,7 @@ export type Project = {
   id: string;
   category: string;
   year: string;
+  period?: string;
   title: string;
   shortDescription: string;
   preview: {
@@ -54,7 +55,7 @@ export const projectsData: Project[] = [
       },
     },
     tags: ["Python", "Power BI", "Pandas", "K-Means", "Holt-Winters", "DAX"],
-    link: "#contexto",
+    link: "/proyectos/colchagua",
     linkLabel: "Explorar caso de estudio",
   },
 ];

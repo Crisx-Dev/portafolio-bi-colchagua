@@ -1,9 +1,15 @@
 ---
 // src/components/StackBadges.astro
-// Renderiza el stack técnico con íconos oficiales de simple-icons.
-// Layout en grid: 1 columna en móvil, 2 en desktop.
-// Si un ícono no existe en simple-icons, se muestra un badge sin SVG (fallback).
 import * as icons from 'simple-icons';
+
+interface StackGroup {
+  category: string;
+  items: string[];
+}
+
+interface Props {
+  stack: StackGroup[];
+}
 
 const { stack } = Astro.props;
 

@@ -13,6 +13,7 @@ export default {
         luna: '#E5E7EB',
       },
       animation: {
+        'scroll-fade-in': 'scrollFadeIn 0.8s ease-out forwards',
         'spin-slow': 'spin 60s linear infinite',
         'pulse-slow': 'pulse 6s ease-in-out infinite',
         'float-slow': 'float 8s ease-in-out infinite',
@@ -45,6 +46,10 @@ export default {
         gridDrift: {
           '0%': { backgroundPosition: '0 0' },
           '100%': { backgroundPosition: '48px 48px' },
+        },
+        scrollFadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },
