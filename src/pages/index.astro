@@ -5,6 +5,8 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import Hero from '../components/Hero.astro';
 import TechStack from '../components/TechStack.astro';
 import Projects from '../components/Projects.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+import { portfolioLinks } from '../data/navigation';
 ---
 
 <html lang="es">
@@ -15,15 +17,16 @@ import Projects from '../components/Projects.astro';
   </head>
   <body class="bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
 
-    <Sidebar />
+    <Sidebar links={portfolioLinks} />
     <ThemeToggle />
 
     <main>
       <Hero />
       <TechStack />
       <Projects />
-      <!-- Próximas secciones: Contexto, Metodología, Hallazgos, etc. -->
     </main>
+
+    <ScrollReveal />
 
   </body>
 </html>

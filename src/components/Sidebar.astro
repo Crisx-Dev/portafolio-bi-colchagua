@@ -1,55 +1,45 @@
 ---
 // src/components/Sidebar.astro
-// Índice minimalista tipo "lista de conversaciones" (ChatGPT/Gemini).
-// Fijo a la derecha, flotante, sin decoración. Oculto en móvil.
-// Resalta la sección activa con una barrita lateral.
+// Índice flotante minimalista tipo "lista de conversaciones".
+// Recibe los links por prop para usarse tanto en el portafolio como en el proyecto.
+import type { NavLink } from '../data/navigation';
+
+interface Props {
+  links?: NavLink[];
+}
+
+const { links = [] } = Astro.props;
 ---
 
-<!-- Índice flotante: oculto en móvil, visible desde md -->
 <nav
   id="section-index"
   aria-label="Índice del portafolio"
   class="hidden md:flex flex-col gap-1
          fixed top-1/2 -translate-y-1/2 right-6 lg:right-10
          z-40
-         max-w-[180px]"
+         max-w-[200px]"
 >
   <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 font-semibold mb-2 pl-3">
     Índice
   </p>
 
-  <a href="#inicio" data-section="inicio"
-     class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
-            text-xs text-slate-500 dark:text-slate-400
-            hover:text-slate-900 dark:hover:text-white
-            hover:bg-slate-100/70 dark:hover:bg-slate-800/50
-            transition-all">
-    <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
-    <span class="truncate">Inicio</span>
-  </a>
-
-    <a href="#tecnologias" data-section="tecnologias"
-     class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
-            text-xs text-slate-500 dark:text-slate-400
-            hover:text-slate-900 dark:hover:text-white
-            hover:bg-slate-100/70 dark:hover:bg-slate-800/50
-            transition-all">
-    <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
-    <span class="truncate">Tecnologías</span>
-  </a>
-    <a href="#proyectos" data-section="proyectos"
-     class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
-            text-xs text-slate-500 dark:text-slate-400
-            hover:text-slate-900 dark:hover:text-white
-            hover:bg-slate-100/70 dark:hover:bg-slate-800/50
-            transition-all">
-    <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
-    <span class="truncate">Proyectos</span>
-  </a>
+  {links.map((link) => (
+    <a
+      href={link.href}
+      data-section={link.section}
+      class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
+             text-xs text-slate-500 dark:text-slate-400
+             hover:text-slate-900 dark:hover:text-white
+             hover:bg-slate-100/70 dark:hover:bg-slate-800/50
+             transition-all"
+    >
+      <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
+      <span class="truncate">{link.label}</span>
+    </a>
+  ))}
 </nav>
 
 <style>
-  /* Estado activo: barra lateral visible + texto en negrita + color destacado */
   .index-link.active {
     color: rgb(5 150 105);
     font-weight: 600;
@@ -65,9 +55,7 @@
 
 <script>
   (() => {
-    // =====================================================
-    // HIGHLIGHT AUTOMÁTICO DE LA SECCIÓN ACTIVA
-    // =====================================================
+    // Highlight automático por scroll
     const links = document.querySelectorAll<HTMLAnchorElement>('.index-link');
     const sections = Array.from(links)
       .map((link) => {
@@ -89,12 +77,22 @@
           });
         },
         {
-          // Se considera activa cuando la sección cruza el centro de la pantalla
           rootMargin: '-40% 0px -55% 0px',
           threshold: 0,
         }
       );
       sections.forEach((section) => observer.observe(section));
     }
+
+    // Actualización inmediata al hacer clic
+    document.querySelectorAll<HTMLAnchorElement>('.index-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        const targetId = link.dataset.section;
+        if (!targetId) return;
+        links.forEach((l) => {
+          l.classList.toggle('active', l.dataset.section === targetId);
+        });
+      });
+    });
   })();
 </script>
