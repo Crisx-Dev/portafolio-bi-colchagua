@@ -1,7 +1,7 @@
 ---
 // src/components/Sidebar.astro
-// Índice flotante minimalista tipo "lista de conversaciones".
-// Recibe los links por prop para usarse tanto en el portafolio como en el proyecto.
+// Índice flotante minimalista.
+// Soporta sub-links que aparecen solo cuando el usuario está en la sección padre.
 import type { NavLink } from '../data/navigation';
 
 interface Props {
@@ -17,29 +17,62 @@ const { links = [] } = Astro.props;
   class="hidden md:flex flex-col gap-1
          fixed top-1/2 -translate-y-1/2 right-6 lg:right-10
          z-40
-         max-w-[200px]"
+         max-w-[220px]"
 >
   <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 font-semibold mb-2 pl-3">
     Índice
   </p>
 
   {links.map((link) => (
-    <a
-      href={link.href}
-      data-section={link.section}
-      class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
-             text-xs text-slate-500 dark:text-slate-400
-             hover:text-slate-900 dark:hover:text-white
-             hover:bg-slate-100/70 dark:hover:bg-slate-800/50
-             transition-all"
-    >
-      <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
-      <span class="truncate">{link.label}</span>
-    </a>
+    <div class="flex flex-col">
+      <a
+        href={link.href}
+        data-section={link.section}
+        class="index-link group flex items-center gap-2 px-3 py-1.5 rounded-md
+               text-xs text-slate-500 dark:text-slate-400
+               hover:text-slate-900 dark:hover:text-white
+               hover:bg-slate-100/70 dark:hover:bg-slate-800/50
+               transition-all"
+      >
+        <span class="index-bar w-0.5 h-4 bg-transparent rounded-full transition-all"></span>
+        <span class="truncate flex-1">{link.label}</span>
+        {link.subLinks && link.subLinks.length > 0 && (
+          <svg class="w-3 h-3 text-slate-400 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        )}
+      </a>
+
+      {link.subLinks && link.subLinks.length > 0 && (
+        <div
+          data-sublinks-for={link.section}
+          class="sublinks flex flex-col gap-0.5 ml-6 mt-0.5
+                 opacity-0 max-h-0 overflow-hidden
+                 transition-all duration-500 ease-out"
+        >
+          {link.subLinks.map((subLink) => (
+            <a
+              href={subLink.href}
+              data-section={subLink.section}
+              data-sublink="true"
+              class="subindex-link flex items-center gap-2 px-2.5 py-1 rounded-md
+                     text-[11px] font-mono text-slate-400 dark:text-slate-500
+                     hover:text-slate-900 dark:hover:text-white
+                     hover:bg-slate-100/70 dark:hover:bg-slate-800/50
+                     transition-all"
+            >
+              <span class="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 subindex-dot transition-all"></span>
+              <span>{subLink.label}</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
   ))}
 </nav>
 
 <style>
+  /* Link activo */
   .index-link.active {
     color: rgb(5 150 105);
     font-weight: 600;
@@ -51,13 +84,35 @@ const { links = [] } = Astro.props;
     background-color: rgb(16 185 129);
     height: 1rem;
   }
+
+  /* Sub-link activo */
+  .subindex-link.active {
+    color: rgb(16 185 129);
+    font-weight: 600;
+  }
+  :global(.dark) .subindex-link.active {
+    color: rgb(52 211 153);
+  }
+  .subindex-link.active .subindex-dot {
+    background-color: rgb(16 185 129);
+    width: 0.375rem;
+    height: 0.375rem;
+  }
+
+  /* Sub-links desplegados */
+  .sublinks.open {
+    opacity: 1;
+    max-height: 200px;
+  }
 </style>
 
 <script>
   (() => {
-    // Highlight automático por scroll
-    const links = document.querySelectorAll<HTMLAnchorElement>('.index-link');
-    const sections = Array.from(links)
+    // =====================================================
+    // HIGHLIGHT AUTOMÁTICO DE LA SECCIÓN ACTIVA
+    // =====================================================
+    const allLinks = document.querySelectorAll<HTMLAnchorElement>('.index-link, .subindex-link');
+    const sections = Array.from(allLinks)
       .map((link) => {
         const id = link.dataset.section;
         return id ? document.getElementById(id) : null;
@@ -70,8 +125,21 @@ const { links = [] } = Astro.props;
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const id = entry.target.id;
-              links.forEach((link) => {
+              allLinks.forEach((link) => {
                 link.classList.toggle('active', link.dataset.section === id);
+              });
+
+              // Abrir/cerrar sub-links según la sección activa
+              document.querySelectorAll<HTMLElement>('.sublinks').forEach((sub) => {
+                const parentSection = sub.dataset.sublinksFor;
+                const isActive = parentSection === id ||
+                  (parentSection === 'hallazgos' && ['h1','h2','h3','h4'].includes(id));
+
+                if (isActive) {
+                  sub.classList.add('open');
+                } else {
+                  sub.classList.remove('open');
+                }
               });
             }
           });
@@ -85,13 +153,24 @@ const { links = [] } = Astro.props;
     }
 
     // Actualización inmediata al hacer clic
-    document.querySelectorAll<HTMLAnchorElement>('.index-link').forEach((link) => {
+    allLinks.forEach((link) => {
       link.addEventListener('click', () => {
         const targetId = link.dataset.section;
         if (!targetId) return;
-        links.forEach((l) => {
+
+        allLinks.forEach((l) => {
           l.classList.toggle('active', l.dataset.section === targetId);
         });
+
+        // Si es un sub-link, abrir el padre
+        if (link.dataset.sublink === 'true') {
+          document.querySelectorAll<HTMLElement>('.sublinks').forEach((sub) => {
+            const parentSection = sub.dataset.sublinksFor;
+            if (parentSection === 'hallazgos') {
+              sub.classList.add('open');
+            }
+          });
+        }
       });
     });
   })();
