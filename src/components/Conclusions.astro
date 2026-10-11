@@ -1,0 +1,211 @@
+---
+// src/components/Conclusions.astro
+// Sección Conclusiones: conclusión principal, comuna crítica,
+// mapa de amenazas, implicaciones y limitaciones.
+import { conclusionsData } from '../data/conclusionsData';
+
+const { mainConclusion, criticalComuna, threats, implications, limitations } = conclusionsData;
+
+const threatColorClasses = {
+  sky: { bar: "bg-sky-500", text: "text-sky-600 dark:text-sky-400", border: "border-sky-500" },
+  red: { bar: "bg-red-500", text: "text-red-600 dark:text-red-400", border: "border-red-500" },
+  amber: { bar: "bg-amber-500", text: "text-amber-600 dark:text-amber-400", border: "border-amber-500" },
+  emerald: { bar: "bg-emerald-500", text: "text-emerald-600 dark:text-emerald-400", border: "border-emerald-500" },
+};
+---
+
+<section id="conclusiones" class="reveal relative py-24 lg:py-32
+                                  bg-slate-50 dark:bg-slate-950
+                                  transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <!-- Encabezado -->
+    <div class="max-w-3xl mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        Conclusiones
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.15]">
+        Qué reveló el análisis y qué implica
+      </h2>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 1: Conclusión principal
+         ============================================================ -->
+    <div class="max-w-4xl mb-24">
+      <h3 class="text-xl md:text-2xl font-bold tracking-tight
+                 text-slate-900 dark:text-white mb-6">
+        {mainConclusion.title}
+      </h3>
+      <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+        {mainConclusion.text}
+      </p>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 2: Comuna crítica
+         ============================================================ -->
+    <div class="mb-24">
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="w-6 h-px bg-emerald-500"></span>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
+          Epicentro crítico
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+
+        <!-- Nombre + perfil -->
+        <div class="lg:col-span-4 flex flex-col justify-center">
+          <h3 class="text-4xl md:text-5xl font-extrabold tracking-tight
+                     text-slate-900 dark:text-white mb-3 leading-tight">
+            {criticalComuna.name}
+          </h3>
+          <p class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+            {criticalComuna.profile}
+          </p>
+        </div>
+
+        <!-- 4 KPIs en grid -->
+        <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {criticalComuna.metrics.map((metric) => (
+            <div class="p-5 rounded-xl
+                        bg-white dark:bg-slate-900
+                        border border-slate-200 dark:border-slate-800">
+              <p class="text-2xl font-extrabold text-slate-900 dark:text-white leading-none mb-2">
+                {metric.value}
+              </p>
+              <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-snug mb-2 font-medium">
+                {metric.label}
+              </p>
+              <p class="text-[10px] text-slate-400 dark:text-slate-500 italic">
+                {metric.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 3: Mapa de amenazas por comuna
+         ============================================================ -->
+    <div class="mb-24">
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="w-6 h-px bg-emerald-500"></span>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
+          Amenazas identificadas
+        </p>
+      </div>
+
+      <h3 class="text-2xl md:text-3xl font-bold tracking-tight
+                 text-slate-900 dark:text-white mb-10 max-w-3xl leading-tight">
+        Qué amenazas afectan a qué comunas
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {threats.map((threat) => {
+          const colors = threatColorClasses[threat.color as keyof typeof threatColorClasses];
+          return (
+            <div class={`relative p-6 lg:p-8 rounded-2xl
+                        bg-white dark:bg-slate-900
+                        border border-slate-200 dark:border-slate-800
+                        border-l-4 ${colors.border}
+                        hover:shadow-lg transition-all`}>
+              <p class={`text-[10px] uppercase tracking-[0.2em] font-bold mb-3 ${colors.text}`}>
+                {threat.title}
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">
+                {threat.description}
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {threat.comunas.map((comuna) => (
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md
+                               bg-slate-100 dark:bg-slate-800
+                               text-xs font-medium
+                               text-slate-700 dark:text-slate-300">
+                    {comuna}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 4: Implicaciones
+         ============================================================ -->
+    <div class="mb-24">
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="w-6 h-px bg-emerald-500"></span>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
+          Implicaciones
+        </p>
+      </div>
+
+      <h3 class="text-2xl md:text-3xl font-bold tracking-tight
+                 text-slate-900 dark:text-white mb-4 max-w-3xl leading-tight">
+        Qué significa este análisis para distintos actores
+      </h3>
+      <p class="text-base text-slate-600 dark:text-slate-400 max-w-3xl mb-10 leading-relaxed">
+        No se trata de recetas prescriptivas, sino de las implicaciones que se desprenden directamente de la evidencia.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {implications.map((imp) => (
+          <div class="p-6 lg:p-8 rounded-2xl
+                      bg-white dark:bg-slate-900
+                      border border-slate-200 dark:border-slate-800">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-bold mb-4">
+              {imp.audience}
+            </p>
+            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              {imp.text}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 5: Limitaciones
+         ============================================================ -->
+    <div>
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="w-6 h-px bg-amber-500"></span>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400 font-semibold">
+          Honestidad metodológica
+        </p>
+      </div>
+
+      <h3 class="text-2xl md:text-3xl font-bold tracking-tight
+                 text-slate-900 dark:text-white mb-10 max-w-3xl leading-tight">
+        Limitaciones del análisis
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {limitations.map((lim, i) => (
+          <div class={`reveal reveal-delay-${i + 1} p-6 rounded-2xl
+                      bg-amber-50/50 dark:bg-amber-950/20
+                      border border-amber-200 dark:border-amber-900/50`}>
+            <p class="text-sm font-bold text-amber-900 dark:text-amber-300 mb-3">
+              {lim.title}
+            </p>
+            <p class="text-xs text-slate-700 dark:text-slate-400 leading-relaxed">
+              {lim.text}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
