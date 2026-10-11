@@ -1,6 +1,5 @@
 /*
  * DATA LAYER: Hallazgos del caso Colchagua
- * Cada hallazgo se renderiza con un título, descripción, KPI y gráfico propio.
  */
 
 export type Finding = {
@@ -14,6 +13,7 @@ export type Finding = {
   };
   chartId: string;
   footnote?: string;
+  bridgeQuote?: string; // Cita puente que va después de este hallazgo
 };
 
 export const findingsData: Finding[] = [
@@ -27,6 +27,7 @@ export const findingsData: Finding[] = [
     },
     chartId: "workers-bar",
     footnote: "Datos 2021, año del descenso post-pandemia. La concentración se mantiene estable en todo el período analizado.",
+    bridgeQuote: "Dos comunas concentran casi la mitad del empleo agrícola provincial. Cuando el fuego o la helada golpean ahí, arrastran a toda la economía local.",
   },
   {
     id: "asimetria-amenazas",
@@ -38,11 +39,35 @@ export const findingsData: Finding[] = [
     },
     chartId: "fire-ha",
     footnote: "Comparación de dos amenazas independientes: superficie afectada por incendios y días promedio de helada por comuna.",
+    bridgeQuote: "El impacto no solo es asimétrico entre comunas. También lo es al interior de cada negocio: las ventas crecen, pero el empleo retrocede a niveles de 2018.",
+  },
+  {
+    id: "efecto-domino",
+    title: "Efecto dominó: ventas al alza, empleo en caída",
+    description: "Al aislar el sector silvoagropecuario, las ventas comunales crecieron en promedio +45,74% entre 2018 y 2021. Sin embargo, el empleo agrícola provincial creció hasta 2020 y colapsó en 2021: cayó un 13% en un solo año, volviendo a los niveles de 2018. Las empresas sobrevivieron a costa de reducir su personal, golpeando al tejido social y a los servicios locales.",
+    highlight: {
+      value: "−13%",
+      label: "cayó el empleo agrícola provincial en 2021, volviendo a niveles de 2018",
+    },
+    chartId: "domino-effect",
+    footnote: "El crecimiento de ventas se calculó aislando exclusivamente el sector silvoagropecuario. El empleo corresponde al total provincial de trabajadores formales del sector agrícola.",
+    bridgeQuote: "El colapso del empleo no vino solo. Se sumó a una estructura productiva vulnerable: más del 40% de las ventas agrícolas depende de un solo grupo de cultivos.",
+  },
+  {
+    id: "monocultivo-carozos",
+    title: "Alta dependencia de los carozos en las ventas agrícolas",
+    description: "El 40% de las ventas agrícolas provinciales proviene de carozos (cerezo, ciruelo, etc.). En comunas como Nancagua, Chimbarongo y San Fernando, esa dependencia supera el 38%. Si un shock afectara específicamente a estas especies, las ventas comunales caerían abruptamente.",
+    highlight: {
+      value: "40%",
+      label: "de las ventas agrícolas provinciales depende de los carozos",
+    },
+    chartId: "monoculture",
+    footnote: "Se comparan las ventas totales del sector agro con las ventas aislando los carozos. La diferencia es la dependencia comunal de este grupo de cultivos.",
   },
 ];
 
 /*
- * Datos específicos para cada gráfico.
+ * Datos para los gráficos
  */
 
 // H1 - Trabajadores agrícolas por comuna
@@ -85,4 +110,26 @@ export const frostByComuna = [
   { comuna: "Palmilla", dias: 3.0 },
   { comuna: "Placilla", dias: 2.75 },
   { comuna: "Lolol", dias: 0.5 },
+];
+
+// H3 - Empleo agrícola provincial por año
+export const employmentByYear = [
+  { anio: "2018", trabajadores: 49859 },
+  { anio: "2019", trabajadores: 54627 },
+  { anio: "2020", trabajadores: 57411 },
+  { anio: "2021", trabajadores: 49875 },
+];
+
+// H4 - Ventas por comuna (con y sin carozos)
+export const salesByComuna = [
+  { comuna: "San Fernando", total: 2056251, sinCarozos: 1275429 },
+  { comuna: "Chimbarongo", total: 1692321, sinCarozos: 1022819 },
+  { comuna: "Santa Cruz", total: 1046672, sinCarozos: 871397 },
+  { comuna: "Nancagua", total: 1003610, sinCarozos: 585811 },
+  { comuna: "Chépica", total: 566532, sinCarozos: 486865 },
+  { comuna: "Placilla", total: 524928, sinCarozos: 383126 },
+  { comuna: "Palmilla", total: 473108, sinCarozos: 381596 },
+  { comuna: "Lolol", total: 328155, sinCarozos: 269757 },
+  { comuna: "Peralillo", total: 321302, sinCarozos: 252184 },
+  { comuna: "Pumanque", total: 134560, sinCarozos: 93138 },
 ];
