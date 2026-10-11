@@ -1,19 +1,20 @@
 ---
 // src/components/Hallazgos.astro
-// Sección de hallazgos del caso Colchagua.
 import {
   findingsData,
   workersByComuna,
   fireByComuna,
   frostByComuna,
-   employmentByYear,
+  employmentByYear,
+  salesByComuna,
 } from '../data/findingsData';
 import WorkersBarChart from './charts/WorkersBarChart.tsx';
 import FireHaChart from './charts/FireHaChart.tsx';
 import FrostChart from './charts/FrostChart.tsx';
 import EmploymentLineChart from './charts/EmploymentLineChart.tsx';
+import MonocultureChart from './charts/MonocultureChart.tsx';
 
-const [finding1, finding2, finding3] = findingsData;
+const [finding1, finding2, finding3, finding4] = findingsData;
 ---
 
 <section id="hallazgos" class="reveal relative py-24 lg:py-32
@@ -261,6 +262,81 @@ const [finding1, finding2, finding3] = findingsData;
 
     </article>
     <!-- Próximos hallazgos se agregarán aquí -->
+    <!-- ============================================================
+         SEPARADOR entre H3 y H4
+         ============================================================ -->
+    <div class="my-20 lg:my-24">
+      <div class="flex items-center gap-4 mb-10">
+        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"></div>
+        <div class="relative">
+          <span class="block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="absolute inset-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping opacity-75"></span>
+        </div>
+        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"></div>
+      </div>
+      <blockquote class="max-w-3xl mx-auto text-center">
+        <p class="text-xl md:text-2xl font-medium italic text-slate-700 dark:text-slate-300 leading-relaxed">
+          "{finding3.bridgeQuote}"
+        </p>
+      </blockquote>
+    </div>
 
+    <!-- ============================================================
+         HALLAZGO 04: Monocultivo de carozos
+         ============================================================ -->
+    <article>
+
+      <!-- Fila superior: texto + KPI -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-10">
+
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 mb-6">
+            <span class="w-6 h-px bg-emerald-500"></span>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold">
+              Hallazgo 04
+            </p>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold tracking-tight
+                     text-slate-900 dark:text-white mb-6 leading-tight">
+            {finding4.title}
+          </h3>
+          <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+            {finding4.description}
+          </p>
+        </div>
+
+        <div class="lg:col-span-5 flex items-center">
+          <div class="w-full p-6 rounded-2xl
+                      bg-slate-50 dark:bg-slate-950/50
+                      border-l-4 border-amber-500">
+            <p class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-none mb-3">
+              {finding4.highlight.value}
+            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+              {finding4.highlight.label}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Gráfico de monocultivo -->
+      <div class="w-full min-w-0 p-6 lg:p-8 rounded-2xl
+                  bg-white dark:bg-slate-900
+                  border border-slate-200 dark:border-slate-800
+                  shadow-sm">
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-6">
+          Ventas del sector agro vs. ventas sin carozos · por comuna
+        </p>
+        <MonocultureChart data={salesByComuna} client:only="react" />
+      </div>
+
+      {finding4.footnote && (
+        <p class="mt-6 text-xs text-slate-400 dark:text-slate-500 italic">
+          {finding4.footnote}
+        </p>
+      )}
+
+    </article>
   </div>
 </section>
