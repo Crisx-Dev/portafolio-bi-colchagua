@@ -30,3 +30,6 @@ section[id] {
     scroll-behavior: auto;
   }
 }
+.grecaptcha-badge {
+  visibility: hidden;
+}
