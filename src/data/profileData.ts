@@ -11,7 +11,7 @@ export const profileData = {
   description: "Especializado en ingeniería de datos, modelado dimensional y machine learning aplicado. Diseño pipelines ETL, construyo datamarts en esquema estrella y despliego soluciones analíticas con foco en el negocio.",
 
   links: {
-    github: "https://github.com/TU_USUARIO_GITHUB",
+    github: "https://github.com/crisx-dev",
     linkedin: "",
     cv: "",
   },

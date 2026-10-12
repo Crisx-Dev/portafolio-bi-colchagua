@@ -9,6 +9,7 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 import { portfolioLinks } from '../data/navigation';
+import MobileNav from '../components/MobileNav.astro';
 ---
 
 <html lang="es">
@@ -20,6 +21,7 @@ import { portfolioLinks } from '../data/navigation';
   <body class="bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
 
     <Sidebar links={portfolioLinks} />
+    <MobileNav links={portfolioLinks} />
     <ThemeToggle />
 
     <main>

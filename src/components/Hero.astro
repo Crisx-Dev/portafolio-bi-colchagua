@@ -10,7 +10,8 @@ import BackgroundGrid from './BackgroundGrid.astro';
 ---
 
 <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden
-                            bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+                            bg-slate-50 dark:bg-slate-950 transition-colors duration-500
+                            py-24 lg:py-0">
 
   <!-- Fondo técnico animado -->
   <BackgroundGrid />
@@ -18,7 +19,7 @@ import BackgroundGrid from './BackgroundGrid.astro';
   <!-- Cursor glow -->
   <CursorFollower />
 
-  <div class="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-12 py-24">
+  <div class="relative z-10 max-w-6xl mx-auto flex flex-col pt-12 lg:pt-0 pb-20 lg:pb-0">
     <!-- Saludo -->
     <p class="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-4 font-medium">
       {profileData.greeting}
@@ -74,7 +75,7 @@ import BackgroundGrid from './BackgroundGrid.astro';
 
       <a
         href="#tecnologias"
-        class="inline-flex items-center gap-2 px-7 py-3.5
+        class="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-7 py-3.5
                bg-white dark:bg-slate-800
                text-slate-900 dark:text-white
                border border-slate-200 dark:border-slate-700
