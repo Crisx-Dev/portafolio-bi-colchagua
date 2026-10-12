@@ -1,6 +1,6 @@
 ---
 // src/components/Contact.astro
-// Sección de contacto: canales + formulario funcional con reCAPTCHA v3.
+// Sección de contacto con reCAPTCHA v3 y feedback visual al enviar.
 import { contactData } from '../data/contactData';
 
 const { heading, channels, form } = contactData;
@@ -83,101 +83,176 @@ const RECAPTCHA_SITE_KEY = "6LfeR-wtAAAAACz8UREX4YrLI8vVrcW-rQgG7szP";
           id="contact-form"
           action={form.endpoint}
           method="POST"
-          class="p-6 lg:p-8 rounded-2xl
+          class="relative p-6 lg:p-8 rounded-2xl
                  bg-white dark:bg-slate-900
                  border border-slate-200 dark:border-slate-800
-                 shadow-sm"
+                 shadow-sm
+                 transition-all"
         >
           <!-- Campo oculto para el token de reCAPTCHA -->
           <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+          <!-- Contenido del formulario (se oculta al enviar) -->
+          <div id="form-fields">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
 
-            <div>
-              <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Nombre
+              <div>
+                <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="w-full px-4 py-2.5 rounded-lg
+                         bg-slate-50 dark:bg-slate-800/50
+                         border border-slate-200 dark:border-slate-700
+                         text-sm text-slate-900 dark:text-white
+                         placeholder:text-slate-400 dark:placeholder:text-slate-500
+                         focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
+                         transition-all"
+                  placeholder="Tu nombre"
+                />
+              </div>
+
+              <div>
+                <label for="email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-2.5 rounded-lg
+                         bg-slate-50 dark:bg-slate-800/50
+                         border border-slate-200 dark:border-slate-700
+                         text-sm text-slate-900 dark:text-white
+                         placeholder:text-slate-400 dark:placeholder:text-slate-500
+                         focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
+                         transition-all"
+                  placeholder="tu@email.com"
+                />
+              </div>
+
+            </div>
+
+            <div class="mb-5">
+              <label for="message" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                Mensaje
               </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
+              <textarea
+                id="message"
+                name="message"
                 required
-                class="w-full px-4 py-2.5 rounded-lg
+                rows={5}
+                class="w-full px-4 py-2.5 rounded-lg resize-none
                        bg-slate-50 dark:bg-slate-800/50
                        border border-slate-200 dark:border-slate-700
                        text-sm text-slate-900 dark:text-white
                        placeholder:text-slate-400 dark:placeholder:text-slate-500
                        focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
                        transition-all"
-                placeholder="Tu nombre"
-              />
+                placeholder="Cuéntame sobre tu proyecto o consulta..."
+              ></textarea>
             </div>
 
-            <div>
-              <label for="email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="w-full px-4 py-2.5 rounded-lg
-                       bg-slate-50 dark:bg-slate-800/50
-                       border border-slate-200 dark:border-slate-700
-                       text-sm text-slate-900 dark:text-white
-                       placeholder:text-slate-400 dark:placeholder:text-slate-500
-                       focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
-                       transition-all"
-                placeholder="tu@email.com"
-              />
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Recibiré tu mensaje directo a mi correo.
+              </p>
+              <button
+                type="submit"
+                id="submit-button"
+                class="inline-flex items-center gap-2 px-6 py-3
+                       bg-slate-900 dark:bg-white
+                       text-white dark:text-slate-900
+                       rounded-lg font-semibold text-sm
+                       hover:bg-emerald-700 dark:hover:bg-emerald-400
+                       transition-all shadow-lg
+                       focus:outline-none focus:ring-2 focus:ring-emerald-500/50
+                       disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <span id="submit-text">Enviar mensaje</span>
+                <svg id="submit-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </button>
             </div>
-
           </div>
 
-          <div class="mb-5">
-            <label for="message" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-              Mensaje
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows={5}
-              class="w-full px-4 py-2.5 rounded-lg resize-none
-                     bg-slate-50 dark:bg-slate-800/50
-                     border border-slate-200 dark:border-slate-700
-                     text-sm text-slate-900 dark:text-white
-                     placeholder:text-slate-400 dark:placeholder:text-slate-500
-                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
-                     transition-all"
-              placeholder="Cuéntame sobre tu proyecto o consulta..."
-            ></textarea>
-          </div>
-
-          <div class="flex items-center justify-between gap-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-              Recibiré tu mensaje directo a mi correo.
+          <!-- Estado: Enviando (oculto por defecto) -->
+          <div id="state-loading" class="hidden flex-col items-center justify-center gap-4 py-8 text-center">
+            <div class="relative w-12 h-12">
+              <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700"></div>
+              <div class="absolute inset-0 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin"></div>
+            </div>
+            <p class="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Enviando mensaje...
             </p>
+          </div>
+
+          <!-- Estado: Éxito (oculto por defecto) -->
+          <div id="state-success" class="hidden flex-col items-center justify-center gap-4 py-10 text-center">
+            <div class="relative">
+              <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50
+                          flex items-center justify-center
+                          animate-[scaleIn_0.4s_ease-out]">
+                <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="absolute inset-0 rounded-full bg-emerald-400/30 animate-ping"></span>
+            </div>
+            <div>
+              <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+                ¡Mensaje enviado!
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Gracias por escribirme. Te responderé lo antes posible.
+              </p>
+            </div>
             <button
-              type="submit"
-              id="submit-button"
-              class="inline-flex items-center gap-2 px-6 py-3
-                     bg-slate-900 dark:bg-white
-                     text-white dark:text-slate-900
-                     rounded-lg font-semibold text-sm
-                     hover:bg-emerald-700 dark:hover:bg-emerald-400
-                     transition-all shadow-lg
-                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50
-                     disabled:opacity-60 disabled:cursor-not-allowed"
+              type="button"
+              id="reset-form"
+              class="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400
+                     hover:text-emerald-700 dark:hover:text-emerald-300
+                     transition-colors"
             >
-              <span id="submit-text">Enviar mensaje</span>
-              <svg id="submit-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
+              Enviar otro mensaje
             </button>
           </div>
+
+          <!-- Estado: Error (oculto por defecto) -->
+          <div id="state-error" class="hidden flex-col items-center justify-center gap-4 py-10 text-center">
+            <div class="w-16 h-16 rounded-full bg-red-100 dark:bg-red-950/50
+                        flex items-center justify-center
+                        animate-[scaleIn_0.4s_ease-out]">
+              <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+                Algo salió mal
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                No pudimos enviar tu mensaje. Inténtalo nuevamente o escríbeme directo al correo.
+              </p>
+            </div>
+            <button
+              type="button"
+              id="retry-form"
+              class="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400
+                     hover:text-emerald-700 dark:hover:text-emerald-300
+                     transition-colors"
+            >
+              Reintentar
+            </button>
+          </div>
+
         </form>
       </div>
 
@@ -186,10 +261,22 @@ const RECAPTCHA_SITE_KEY = "6LfeR-wtAAAAACz8UREX4YrLI8vVrcW-rQgG7szP";
   </div>
 </section>
 
-<!-- reCAPTCHA v3: carga la API de Google -->
+<style>
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<!-- reCAPTCHA v3 -->
 <script src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`} is:inline></script>
 
-<!-- Lógica de envío con token reCAPTCHA -->
 <script define:vars={{ RECAPTCHA_SITE_KEY }} is:inline>
   (() => {
     const form = document.getElementById('contact-form');
@@ -197,22 +284,97 @@ const RECAPTCHA_SITE_KEY = "6LfeR-wtAAAAACz8UREX4YrLI8vVrcW-rQgG7szP";
     const submitText = document.getElementById('submit-text');
     const recaptchaResponse = document.getElementById('g-recaptcha-response');
 
-    if (!form || !submitButton || !recaptchaResponse) return;
+    const formFields = document.getElementById('form-fields');
+    const stateLoading = document.getElementById('state-loading');
+    const stateSuccess = document.getElementById('state-success');
+    const stateError = document.getElementById('state-error');
 
+    const resetBtn = document.getElementById('reset-form');
+    const retryBtn = document.getElementById('retry-form');
+
+    if (!form) return;
+
+    // Función para mostrar un estado y ocultar los otros
+    const showState = (state) => {
+      formFields.classList.add('hidden');
+      stateLoading.classList.add('hidden');
+      stateLoading.classList.remove('flex');
+      stateSuccess.classList.add('hidden');
+      stateSuccess.classList.remove('flex');
+      stateError.classList.add('hidden');
+      stateError.classList.remove('flex');
+
+      if (state === 'form') {
+        formFields.classList.remove('hidden');
+      } else if (state === 'loading') {
+        stateLoading.classList.remove('hidden');
+        stateLoading.classList.add('flex');
+      } else if (state === 'success') {
+        stateSuccess.classList.remove('hidden');
+        stateSuccess.classList.add('flex');
+      } else if (state === 'error') {
+        stateError.classList.remove('hidden');
+        stateError.classList.add('flex');
+      }
+    };
+
+    // Interceptar envío del formulario
     form.addEventListener('submit', (e) => {
-      // Evitar envío inmediato y deshabilitar el botón para prevenir doble clic
       e.preventDefault();
 
       submitButton.disabled = true;
       if (submitText) submitText.textContent = 'Enviando...';
 
-      // Ejecutar reCAPTCHA de forma invisible
+      showState('loading');
+
+      // Ejecutar reCAPTCHA v3
       grecaptcha.ready(() => {
         grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }).then((token) => {
           recaptchaResponse.value = token;
-          form.submit();
+
+          // Enviar con fetch para evitar redirección
+          const formData = new FormData(form);
+          fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' },
+          })
+            .then((response) => {
+              if (response.ok) {
+                showState('success');
+                form.reset();
+              } else {
+                showState('error');
+              }
+            })
+            .catch(() => {
+              showState('error');
+            })
+            .finally(() => {
+              submitButton.disabled = false;
+              if (submitText) submitText.textContent = 'Enviar mensaje';
+            });
+        }).catch(() => {
+          showState('error');
+          submitButton.disabled = false;
+          if (submitText) submitText.textContent = 'Enviar mensaje';
         });
       });
     });
+
+    // Botón "Enviar otro mensaje" (desde éxito)
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        showState('form');
+        form.reset();
+      });
+    }
+
+    // Botón "Reintentar" (desde error)
+    if (retryBtn) {
+      retryBtn.addEventListener('click', () => {
+        showState('form');
+      });
+    }
   })();
 </script>
