@@ -1,43 +1,59 @@
-# Astro Starter Kit: Minimal
+# Portafolio BI — Cristóbal Vargas
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Portafolio profesional web que presenta el proyecto de Business Intelligence sobre vulnerabilidad territorial en la provincia de Colchagua (Región de O'Higgins, Chile), período 2018-2021.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Sitio desplegado: [portafolio-bi-colchagua.vercel.app](https://portafolio-bi-colchagua.vercel.app)
 
-## 🚀 Project Structure
+## Descripción
 
-Inside of your Astro project, you'll see the following folders and files:
+Portafolio profesional construido con Astro, React y Tailwind CSS. Incluye:
 
-```text
-/
-├── public/
+- **Perfil profesional** con stack técnico y canales de contacto.
+- **Sección de tecnologías** con íconos y agrupación por categoría.
+- **Proyectos destacados** con modal de vista previa.
+- **Caso de estudio completo** en `/proyectos/colchagua`:
+  - Contexto del problema y fuentes de datos.
+  - Metodología (pipeline ETL, Datamart, ML, DAX).
+  - Hallazgos con gráficos interactivos propios (Recharts).
+  - Conclusiones con mapa de amenazas por comuna.
+  - Dashboard con previews del reporte Power BI.
+- **Formulario de contacto** funcional con reCAPTCHA v3.
+
+## Stack técnico
+
+- **Framework:** Astro 7
+- **Islas interactivas:** React 19
+- **Estilos:** Tailwind CSS 3
+- **Gráficos:** Recharts
+- **Íconos:** Simple Icons, Lucide
+- **Formularios:** Formspree + reCAPTCHA v3
+- **Deploy:** Vercel (CI/CD desde GitHub)
+
+## Estructura del proyecto
+portafolio-bi-colchagua/
+├── public/ # Assets estáticos (imágenes, favicon)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│ ├── components/ # Componentes Astro y React
+│ │ └── charts/ # Gráficos Recharts
+│ ├── data/ # Capa de datos (fuente única de verdad)
+│ ├── pages/ # Rutas del sitio (file-based routing)
+│ │ ├── index.astro # Portafolio principal
+│ │ └── proyectos/
+│ │ └── colchagua.astro # Caso de estudio completo
+│ └── styles/
+│ └── global.css # Estilos globales
+├── astro.config.mjs
+├── tailwind.config.mjs
+├── postcss.config.mjs
 └── package.json
-```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Cómo correr en local
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Requiere Node.js 22 o superior.
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+# Instalar dependencias
+npm install --legacy-peer-deps
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+# Correr en desarrollo
+npm run dev
