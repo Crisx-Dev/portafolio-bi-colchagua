@@ -1,9 +1,11 @@
 ---
 // src/components/Contact.astro
-// Sección de contacto: canales + formulario funcional.
+// Sección de contacto: canales + formulario funcional con reCAPTCHA v3.
 import { contactData } from '../data/contactData';
 
 const { heading, channels, form } = contactData;
+
+const RECAPTCHA_SITE_KEY = "6LfeR-wtAAAAACz8UREX4YrLI8vVrcW-rQgG7szP";
 ---
 
 <section id="contacto" class="reveal relative py-24 lg:py-32
@@ -78,6 +80,7 @@ const { heading, channels, form } = contactData;
       <!-- Formulario -->
       <div class="lg:col-span-8">
         <form
+          id="contact-form"
           action={form.endpoint}
           method="POST"
           class="p-6 lg:p-8 rounded-2xl
@@ -85,6 +88,9 @@ const { heading, channels, form } = contactData;
                  border border-slate-200 dark:border-slate-800
                  shadow-sm"
         >
+          <!-- Campo oculto para el token de reCAPTCHA -->
+          <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
 
             <div>
@@ -155,16 +161,18 @@ const { heading, channels, form } = contactData;
             </p>
             <button
               type="submit"
+              id="submit-button"
               class="inline-flex items-center gap-2 px-6 py-3
                      bg-slate-900 dark:bg-white
                      text-white dark:text-slate-900
                      rounded-lg font-semibold text-sm
                      hover:bg-emerald-700 dark:hover:bg-emerald-400
                      transition-all shadow-lg
-                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50
+                     disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Enviar mensaje
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span id="submit-text">Enviar mensaje</span>
+              <svg id="submit-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
@@ -177,3 +185,34 @@ const { heading, channels, form } = contactData;
 
   </div>
 </section>
+
+<!-- reCAPTCHA v3: carga la API de Google -->
+<script src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`} is:inline></script>
+
+<!-- Lógica de envío con token reCAPTCHA -->
+<script define:vars={{ RECAPTCHA_SITE_KEY }} is:inline>
+  (() => {
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
+    const submitText = document.getElementById('submit-text');
+    const recaptchaResponse = document.getElementById('g-recaptcha-response');
+
+    if (!form || !submitButton || !recaptchaResponse) return;
+
+    form.addEventListener('submit', (e) => {
+      // Evitar envío inmediato y deshabilitar el botón para prevenir doble clic
+      e.preventDefault();
+
+      submitButton.disabled = true;
+      if (submitText) submitText.textContent = 'Enviando...';
+
+      // Ejecutar reCAPTCHA de forma invisible
+      grecaptcha.ready(() => {
+        grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }).then((token) => {
+          recaptchaResponse.value = token;
+          form.submit();
+        });
+      });
+    });
+  })();
+</script>
