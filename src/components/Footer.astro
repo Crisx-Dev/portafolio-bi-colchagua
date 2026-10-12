@@ -1,0 +1,82 @@
+---
+// src/components/Footer.astro
+// Footer global del sitio.
+import { contactData } from '../data/contactData';
+
+const { footer, channels } = contactData;
+const github = channels.find((c) => c.icon === "github");
+const email = channels.find((c) => c.icon === "mail");
+---
+
+<footer class="relative py-12
+               bg-slate-900 dark:bg-slate-950
+               border-t border-slate-800 dark:border-slate-900">
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+
+      <!-- Marca -->
+      <div>
+        <p class="text-base font-bold text-white mb-2">
+          Cristóbal Vargas
+        </p>
+        <p class="text-xs text-slate-400 mb-1">
+          {footer.tagline}
+        </p>
+        <p class="text-xs text-slate-500">
+          Ingeniero en Business Intelligence
+        </p>
+      </div>
+
+      <!-- Links rápidos -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold mb-3">
+          Navegación
+        </p>
+        <ul class="space-y-2">
+          <li><a href="/" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">Inicio</a></li>
+          <li><a href="/#proyectos" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">Proyectos</a></li>
+          <li><a href="/proyectos/colchagua" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">Caso Colchagua</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold mb-3">
+          Contacto
+        </p>
+        <ul class="space-y-2">
+          {github && (
+            <li>
+              <a href={github.href} target="_blank" rel="noopener noreferrer"
+                 class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">
+                GitHub
+              </a>
+            </li>
+          )}
+          {email && (
+            <li>
+              <a href={email.href} class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">
+                {email.value}
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Línea divisoria -->
+    <div class="pt-6 border-t border-slate-800 dark:border-slate-900
+                flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-slate-500">
+        © {footer.year} Cristóbal Vargas. Todos los derechos reservados.
+      </p>
+      <p class="text-xs text-slate-500">
+        Hecho con <span class="text-emerald-400 font-medium">{footer.stack}</span>
+      </p>
+    </div>
+
+  </div>
+</footer>

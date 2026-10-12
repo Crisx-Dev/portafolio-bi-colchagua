@@ -1,6 +1,5 @@
 /*
  * DATA LAYER: Navegación
- * Define los links del Sidebar por contexto (portafolio vs. proyecto).
  */
 
 export type NavSubLink = {
@@ -21,6 +20,7 @@ export const portfolioLinks: NavLink[] = [
   { href: "#inicio", label: "Inicio", section: "inicio" },
   { href: "#tecnologias", label: "Tecnologías", section: "tecnologias" },
   { href: "#proyectos", label: "Proyectos", section: "proyectos" },
+  { href: "#contacto", label: "Contacto", section: "contacto" },
 ];
 
 // Links para la página del caso de estudio Colchagua
@@ -41,5 +41,4 @@ export const colchaguaLinks: NavLink[] = [
   },
   { href: "#conclusiones", label: "Conclusiones", section: "conclusiones" },
   { href: "#dashboard", label: "Dashboard", section: "dashboard" },
-  { href: "#notebooks", label: "Notebooks", section: "notebooks" },
 ];

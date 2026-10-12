@@ -1,0 +1,179 @@
+---
+// src/components/Contact.astro
+// Sección de contacto: canales + formulario funcional.
+import { contactData } from '../data/contactData';
+
+const { heading, channels, form } = contactData;
+---
+
+<section id="contacto" class="reveal relative py-24 lg:py-32
+                              bg-slate-50 dark:bg-slate-950
+                              transition-colors duration-500">
+
+  <div class="absolute top-0 left-0 w-full h-px
+              bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-5xl mx-auto px-6 lg:px-12">
+
+    <!-- Encabezado -->
+    <div class="max-w-3xl mb-12">
+      <p class="text-xs uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-4 font-semibold">
+        Contacto
+      </p>
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight
+                 text-slate-900 dark:text-white mb-6 leading-[1.15]">
+        {heading.title}
+      </h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+        {heading.description}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+      <!-- Canales de contacto -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+        {channels.map((channel) => (
+          <a
+            href={channel.href}
+            target={channel.icon === "github" ? "_blank" : undefined}
+            rel={channel.icon === "github" ? "noopener noreferrer" : undefined}
+            class="group flex items-center gap-4 p-5 rounded-xl
+                   bg-white dark:bg-slate-900
+                   border border-slate-200 dark:border-slate-800
+                   hover:border-emerald-400 dark:hover:border-emerald-600
+                   hover:shadow-lg
+                   transition-all"
+          >
+            <div class="shrink-0 w-10 h-10 rounded-lg
+                        bg-emerald-50 dark:bg-emerald-950/40
+                        flex items-center justify-center
+                        group-hover:bg-emerald-500
+                        transition-colors">
+              {channel.icon === "mail" ? (
+                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 group-hover:text-white transition-colors"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              ) : (
+                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 group-hover:text-white transition-colors"
+                     fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.19.7.8.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              )}
+            </div>
+            <div class="min-w-0">
+              <p class="text-[10px] uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 font-semibold mb-1">
+                {channel.label}
+              </p>
+              <p class="text-sm font-medium text-slate-900 dark:text-white truncate">
+                {channel.value}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Formulario -->
+      <div class="lg:col-span-8">
+        <form
+          action={form.endpoint}
+          method="POST"
+          class="p-6 lg:p-8 rounded-2xl
+                 bg-white dark:bg-slate-900
+                 border border-slate-200 dark:border-slate-800
+                 shadow-sm"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+
+            <div>
+              <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                Nombre
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-2.5 rounded-lg
+                       bg-slate-50 dark:bg-slate-800/50
+                       border border-slate-200 dark:border-slate-700
+                       text-sm text-slate-900 dark:text-white
+                       placeholder:text-slate-400 dark:placeholder:text-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
+                       transition-all"
+                placeholder="Tu nombre"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-2.5 rounded-lg
+                       bg-slate-50 dark:bg-slate-800/50
+                       border border-slate-200 dark:border-slate-700
+                       text-sm text-slate-900 dark:text-white
+                       placeholder:text-slate-400 dark:placeholder:text-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
+                       transition-all"
+                placeholder="tu@email.com"
+              />
+            </div>
+
+          </div>
+
+          <div class="mb-5">
+            <label for="message" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              Mensaje
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows={5}
+              class="w-full px-4 py-2.5 rounded-lg resize-none
+                     bg-slate-50 dark:bg-slate-800/50
+                     border border-slate-200 dark:border-slate-700
+                     text-sm text-slate-900 dark:text-white
+                     placeholder:text-slate-400 dark:placeholder:text-slate-500
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500
+                     transition-all"
+              placeholder="Cuéntame sobre tu proyecto o consulta..."
+            ></textarea>
+          </div>
+
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Recibiré tu mensaje directo a mi correo.
+            </p>
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2 px-6 py-3
+                     bg-slate-900 dark:bg-white
+                     text-white dark:text-slate-900
+                     rounded-lg font-semibold text-sm
+                     hover:bg-emerald-700 dark:hover:bg-emerald-400
+                     transition-all shadow-lg
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+            >
+              Enviar mensaje
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>
