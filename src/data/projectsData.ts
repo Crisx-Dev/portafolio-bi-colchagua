@@ -43,7 +43,7 @@ export const projectsData: Project[] = [
       description: "El proyecto se centra en el período 2018 — 2021 e integra cuatro fuentes oficiales (SII, Catastro Frutícola, CONAF y Open-Meteo) para construir un Datamart en esquema estrella y analizar el efecto dominó que un shock climático o económico genera sobre el tejido PYME de la provincia. Incluye pipeline ETL en Python, modelado dimensional, clustering K-Means para segmentar comunas por perfil de riesgo, y proyecciones Holt-Winters para escasez hídrica.",
       images: {
         biDashboard: {
-          src: "/images/proyectos/colchagua-bi-dashboard.png",
+          src: "/images/proyectos/colchagua-bi-dashboard.webp",
           alt: "Vista general del dashboard de Power BI del proyecto Colchagua",
           caption: "Dashboard interactivo en Power BI",
         },
