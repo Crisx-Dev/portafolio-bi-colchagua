@@ -2,6 +2,7 @@
 // src/pages/proyectos/colchagua.astro
 import '../../styles/global.css';
 import Sidebar from '../../components/Sidebar.astro';
+import MobileNav from '../../components/MobileNav.astro';
 import ThemeToggle from '../../components/ThemeToggle.astro';
 import ColchaguaHero from '../../components/ColchaguaHero.astro';
 import ColchaguaContext from '../../components/ColchaguaContext.astro';
@@ -11,19 +12,25 @@ import Conclusions from '../../components/Conclusions.astro';
 import Dashboard from '../../components/Dashboard.astro';
 import Footer from '../../components/Footer.astro';
 import ScrollReveal from '../../components/ScrollReveal.astro';
+import MetaTags from '../../components/MetaTags.astro';
 import { colchaguaLinks } from '../../data/navigation';
-import MobileNav from '../../components/MobileNav.astro';
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Caso Colchagua | Cristóbal Vargas</title>
+    <MetaTags
+      title="Caso Colchagua | Cristóbal Vargas"
+      description="Análisis de Business Intelligence sobre vulnerabilidad territorial en la provincia de Colchagua (2018-2021). Datos climáticos, económicos y territoriales integrados para identificar comunas y PYMEs más expuestas."
+      image="/trigo.webp"
+      url="https://portafolio-bi-colchagua.vercel.app/proyectos/colchagua"
+    />
   </head>
   <body class="bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
-    <MobileNav links={colchaguaLinks} />
+
     <Sidebar links={colchaguaLinks} />
+    <MobileNav links={colchaguaLinks} />
     <ThemeToggle />
 
     <main>

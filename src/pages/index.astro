@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro
 import Sidebar from '../components/Sidebar.astro';
+import MobileNav from '../components/MobileNav.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Hero from '../components/Hero.astro';
 import TechStack from '../components/TechStack.astro';
@@ -8,15 +9,20 @@ import Projects from '../components/Projects.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
+import MetaTags from '../components/MetaTags.astro';
 import { portfolioLinks } from '../data/navigation';
-import MobileNav from '../components/MobileNav.astro';
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Cristóbal Vargas | Portafolio BI</title>
+    <MetaTags
+      title="Cristóbal Vargas | Portafolio BI"
+      description="Portafolio profesional de Business Intelligence. Caso de estudio completo: análisis de vulnerabilidad territorial en Colchagua con Python, Power BI y machine learning."
+      image="/images/og-default.webp"
+      url="https://portafolio-bi-colchagua.vercel.app/"
+    />
   </head>
   <body class="bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
 
